@@ -26,7 +26,7 @@ public class LoadGen extends Thread {
     }
 
     public final static void help() {
-        System.out.println("Usage: java -jar ./dist/LoadGen.jar --config ./jobs/your-job-file.json");
+        System.out.println("Usage: java -jar ./dist/LoadGen.jar --config ./jobs/your-job-file.json ");
     }
 
     private static int maxWorkload(JSONArray wa) {
