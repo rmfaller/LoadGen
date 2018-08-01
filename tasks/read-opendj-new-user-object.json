@@ -1,0 +1,11 @@
+{
+    "name": "read-opendj-user-object",
+    "request": "GET",
+    "header": {
+        "X-OpenIDM-Username": "user.$RANDOMVALUE",
+        "X-OpenIDM-Password": "password",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint" : "/users/",
+    "url-payload": "user.$RANDOMVALUE"
+}

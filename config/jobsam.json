@@ -1,0 +1,20 @@
+{
+    "name": "my job 0",
+    "service-environment": "mac laptop running two OpenDJ 2.6.2 instance in vbox, replicated, behind haproxy",
+    "service-location-port": "http://openportal.example.com:8080",
+    "ADMINUSERID": "amadmin",
+    "ADMINUSERPASSWORD": "zer0!Two",
+    "load-generator": "mac laptop running JDK 8",
+    "threads": 3,
+    "threadgroupsize": 1,
+    "threadinterval": 1,
+    "upperbounds": 10000,
+    "workloads": [
+        {
+            "authenticate-admin-create-user-logout": 0
+        },
+        {
+            "authenticate-read-logout-user-object": 1000
+        }
+    ]
+}

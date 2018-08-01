@@ -1,0 +1,17 @@
+{
+    "name": "patch-opendj-object-random",
+    "request": "PATCH",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/users/",
+    "url-payload": "user.$RANDOMVALUE",
+    "data-payload":
+            {
+                "operation": "replace",
+                "field": "displayName",
+                "value": "Cooper"
+            }
+}

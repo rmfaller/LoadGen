@@ -1,0 +1,11 @@
+{
+    "name": "adminuser-query-opendj-user-objects",
+    "request": "GET",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/api/users/",
+    "url-payload": "?_queryFilter=_id+eq+'user.$RANDOMVALUE'"
+}

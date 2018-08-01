@@ -1,0 +1,8 @@
+{
+    "name": "create-user-object",
+    "tasks": [
+        {
+            "create-openam-user-object-post": 10000
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "name": "update-user-object",
+    "tasks": [
+        {
+            "update-opendj-object-random": 800
+        }
+    ]
+}

@@ -1,0 +1,8 @@
+{
+    "name": "user-authenticate-readuserobject",
+    "tasks": [
+        {
+            "read-opendj-user-object": 400
+        }
+    ]
+}

@@ -1,0 +1,24 @@
+{
+    "name": "create-opendj-user-object",
+    "request": "PUT",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json",
+        "If-None-Match": "*"
+    },
+    "url-endpoint" : "/users/",
+    "url-payload": "user.$THREADID.$RANDOMVALUE",
+    "data-payload": {
+        "_id": "user.$THREADID.$RANDOMVALUE",
+        "contactInformation": {
+            "telephoneNumber": "+1 408 555 1212",
+            "emailAddress": "user.$RANDOMVALUE@example.com"
+        },
+        "name": {
+            "familyName": "$RANDOMVALUE",
+            "givenName": "User"
+        },
+        "displayName": "User $THREADID $RANDOMVALUE"
+    }
+}

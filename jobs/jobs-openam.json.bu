@@ -1,0 +1,38 @@
+{
+    "name": "AM5 test to gauge AuthN, Validate, and read attributes",
+    "service-environment": "MacBook Pro 2.3GHz Intel Core i7 w/ 16GB mem running three vbox Ubuntu instances (2 cores, 8GB per instance ) - AM5, CTS, DS5 w/2M objects off USB drive",
+    "service-location-port": "http://am2.forgerock.ca:8080",
+    "ADMINUSERID": "amadmin",
+    "ADMINUSERPASSWORD": "Forgerock",
+    "load-generator": "same mac laptop running JDK 8 (averages 60% - 70% idle)",
+    "threads": 32,
+    "threadgroupsize": 0,
+    "threadinterval": 0,
+    "upperbounds": 2000,
+    "workloads": [
+        {
+            "adminuser-authenticate-createuser-logout": 0
+        },
+        {
+            "user-authenticate-validate4x-logout": 10
+        },
+        {
+            "create-user-object": 0
+        },
+        {
+            "read-user-object": 0
+        },
+        {
+            "update-user-object": 0
+        },
+        {
+            "delete-user-object": 0
+        },
+        {
+            "patch-user-object": 0
+        },
+        {
+            "query-user-objects": 0
+        }
+    ]
+}

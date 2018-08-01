@@ -1,0 +1,29 @@
+{
+    "name": "Java tuning tests",
+    "service-environment": "Single instance OpenDJ 2.6.3, JDK 1.8, Ubuntu 14.04, Azure D2 - 2 core, 7GB, one stripe across four disks ",
+    "service-location-port": "http://192.168.0.16:8080",
+    "ADMINUSERID": "adminuser",
+    "ADMINUSERPASSWORD": "password",
+    "load-generator": "mac laptop running JDK 8",
+    "threads": 4,
+    "threadgroupsize": 0,
+    "threadinterval": 100,
+    "upperbounds": 90000,
+    "workloads": [
+        {
+            "read-user-object": 10000
+        },
+        {
+            "query-user-objects": 0
+        },
+        {
+            "update-user-object": 0
+        },
+        {
+            "create-user-object": 0
+        },
+        {
+            "delete-user-object" : 0
+        }
+    ]
+}

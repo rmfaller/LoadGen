@@ -1,0 +1,24 @@
+{
+    "name": "create-opendj-object-increment",
+    "request": "PUT",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json",
+        "If-None-Match": "*"
+    },
+    "url-endpoint" : "/users/",
+    "url-payload": "iuser.$INCREMENT",
+    "data-payload": {
+        "_id": "iuser.$INCREMENT",
+        "contactInformation": {
+            "telephoneNumber": "+1 408 555 1212",
+            "emailAddress": "iuser.$INCREMENT@example.com"
+        },
+        "name": {
+            "familyName": "$INCREMENT",
+            "givenName": "iUser"
+        },
+        "displayName": "iUser $INCREMENT"
+    }
+}

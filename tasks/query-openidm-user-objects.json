@@ -1,0 +1,11 @@
+{
+    "name": "query-openidm-user-objects",
+    "request": "GET",
+    "header": {
+        "X-OpenIDM-Username": "openidm-admin",
+        "X-OpenIDM-Password": "zer0!Two",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint" : "/openidm/managed/user/",
+    "url-payload": "?_queryId=query-all-ids"
+}

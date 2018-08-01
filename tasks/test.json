@@ -1,0 +1,16 @@
+{
+    "contactInformation": {
+        "emailAddress": "user.129@example.com",
+        "telephoneNumber": "129"
+    },
+    "manager": [{
+            "displayName": "User 666",
+            "_id": "user.666"
+        }],
+    "displayName": "User 129",
+    "name": {
+        "familyName": "129",
+        "givenName": "User"
+    },
+    "_id": "user.129"
+}

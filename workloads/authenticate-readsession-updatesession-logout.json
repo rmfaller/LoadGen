@@ -1,0 +1,26 @@
+{
+    "name": "authenticate-readsession-updatesession-logout",
+    "tasks": [
+        {
+            "authenticate-openam-user-object": 300
+        },
+        {
+            "validate-openam-user-session": 150
+        },
+        {
+            "read-openam-session": 300
+        },
+        {
+            "read-openam-session-properties": 150
+        },
+        {
+            "update-openam-session-property": 100
+        },
+        {
+            "read-openam-session-property": 150
+        },
+        {
+            "logout-openam-user-object": 100
+        }
+    ]
+}

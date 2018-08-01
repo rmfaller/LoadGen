@@ -1,0 +1,35 @@
+{
+    "name": "authenticate-read-logout-user-object",
+    "tasks": [
+        {
+            "authenticate-openam-user-object": 400
+        },
+        {
+            "validate-openam-user-session": 50
+        },
+        {
+            "validate-openam-user-session": 50
+        },
+        {
+            "sleep": 0
+        },
+        {
+            "read-openam-user-object": 200
+        },
+        {
+            "validate-openam-user-session": 50
+        },
+        {
+            "sleep": 0
+        },
+        {
+            "validate-openam-user-session": 50
+        },
+        {
+            "sleep": 0
+        },
+        {
+            "logout-openam-user-object": 100
+        }
+    ]
+}

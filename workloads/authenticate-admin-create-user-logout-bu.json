@@ -1,0 +1,17 @@
+{
+    "name": "authenticate-admin-create-user-logout",
+    "tasks": [
+        {
+            "authenticate-openam-admin": 400
+        },
+        {
+            "create-openam-user-object" : 800
+        },
+        {
+            "logout-openam-user-object" : 100
+        },
+        {
+            "sleep" : 500
+        }
+    ]
+}

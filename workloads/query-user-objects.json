@@ -1,0 +1,8 @@
+{
+    "name": "query-user-objects",
+    "tasks": [
+        {
+            "query-opendj-user-objects": 800
+        }
+    ]
+}

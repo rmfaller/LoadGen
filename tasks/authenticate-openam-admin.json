@@ -1,0 +1,11 @@
+{
+    "name": "authenticate-openam-admin",
+    "request": "POST",
+    "header": {
+        "X-OpenAM-Username": "amadmin",
+        "X-OpenAM-Password": "Forgerock",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/am/json/",
+    "url-payload": "authenticate"
+}

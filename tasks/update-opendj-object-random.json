@@ -1,0 +1,28 @@
+{
+    "name": "update-opendj-object-random",
+    "request": "PUT",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "If-Match" : "*",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/api/users/",
+    "url-payload": "user.$RANDOMVALUE",
+    "data-payload": {
+        "contactInformation": {
+            "telephoneNumber": "888-$RANDOMVALUE",
+            "emailAddress": "user.$RANDOMVALUE@example.com"
+        },
+        "name": {
+            "familyName": "$RANDOMVALUE",
+            "givenName": "User"
+        },
+        "userName" : "user.$RANDOMVALUE",
+        "displayName": ["User $RANDOMVALUE"],
+        "manager": {
+                "_id": "user.666",
+                "displayName": "User 666"
+            }
+    }
+}

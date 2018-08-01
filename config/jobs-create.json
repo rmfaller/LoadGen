@@ -1,0 +1,38 @@
+{
+    "name": "JVM tuning 0",
+    "service-environment": "AWS - 2 cores, 16GB (2GB for OpenAM 13), Linux 64 bit, JDK 1.8, OpenDJ 3.0, start-ds.java-args=-server",
+    "service-location-port": "http://bb8.windycitydevops.com:18080",
+    "ADMINUSERID": "adminuser",
+    "ADMINUSERPASSWORD": "zer0!Two",
+    "load-generator": "AWS Clapman",
+    "threads": 100,
+    "threadgroupsize": 10,
+    "threadinterval": 100,
+    "upperbounds": 10000,
+    "workloads": [
+        {
+            "authenticate-read-user-object": 0
+        },
+        {
+            "query-user-objects": 0
+        },
+        {
+            "authenticate-read-logout-user-object": 1000
+        },
+        {
+            "authenticate-admin-create-user-logout": 0
+        },
+        {
+            "create-and-update-user-object": 0
+        },
+        {
+            "create-user-object": 0
+        },
+        {
+          "authenticate-admin" : 0
+        },
+        {
+            "delete-user-object" : 0
+        }
+    ]
+}

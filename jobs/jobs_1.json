@@ -1,0 +1,38 @@
+{
+    "name": "AAMC test 0",
+    "service-environment": "mac laptop running two OpenDJ 2.6.2 instance in vbox, replicated, behind haproxy",
+    "service-location-port": "http://192.168.0.10:8080",
+    "ADMINUSERID": "adminuser",
+    "ADMINUSERPASSWORD": "password",
+    "load-generator": "mac laptop running JDK 8",
+    "threads": 2,
+    "threadgroupsize": 0,
+    "threadinterval": 0,
+    "upperbounds": 200000,
+    "workloads": [
+        {
+            "read-user-object": 20
+        },
+        {
+            "update-user-object" : 20
+        },
+        {
+            "query-user-objects": 20
+        },
+        {
+            "authenticate-read-logout-user-object": 0
+        },
+        {
+            "authenticate-admin-create-user-logout": 0
+        },
+        {
+            "create-and-update-user-object": 0
+        },
+        {
+            "create-user-object": 0
+        },
+        {
+            "delete-user-object" : 0
+        }
+    ]
+}

@@ -1,0 +1,32 @@
+{
+    "name": "Generate load for SawMill test",
+    "service-environment": "mac laptop running vbox hosting ubuntu (2 cores, 8GB) running an OpenDJ 3.5 instance loaded w/20M objects",
+    "service-location-port": "http://192.168.0.10:8089",
+    "ADMINUSERID": "adminuser",
+    "ADMINUSERPASSWORD": "password",
+    "load-generator": "mac laptop running JDK 8",
+    "threads": 4,
+    "threadgroupsize": 0,
+    "threadinterval": 0,
+    "upperbounds": 2000,
+    "workloads": [
+        {
+            "create-user-object": 0
+        },
+        {
+            "read-user-object": 1000
+        },
+        {
+            "update-user-object": 1
+        },
+        {
+            "delete-user-object": 0
+        },
+        {
+            "patch-user-object": 0
+        },
+        {
+            "query-user-objects": 100
+        }
+    ]
+}

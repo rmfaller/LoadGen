@@ -1,0 +1,10 @@
+{
+    "name": "validate-openam-user-session",
+    "request": "POST",
+    "header": {
+        "Content-Type": "application/json",
+        "iplanetDirectoryPro": "tokenId"
+    },
+    "url-endpoint": "/openam/json/sessions/",
+    "url-payload": "?$TOKENID&_action=validate"
+}

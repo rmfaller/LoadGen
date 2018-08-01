@@ -1,0 +1,27 @@
+{
+    "name": "update-opendj-user-object",
+    "request": "PUT",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint" : "/users/",
+    "url-payload": "user.$RANDOMVALUE",
+    "data-payload": {
+        "_id": "user.$RANDOMVALUE",
+        "contactInformation": {
+            "telephoneNumber": "888 111 $RANDOMVALUE",
+            "emailAddress": "user.$RANDOMVALUE@example.com"
+        },
+        "name": {
+            "familyName": "$RANDOMVALUE",
+            "givenName": "User"
+        },
+        "displayName": "User $RANDOMVALUE",
+        "manager": [{
+                "_id": "user.666",
+                "displayName": "User 666"
+            }]
+    }
+}

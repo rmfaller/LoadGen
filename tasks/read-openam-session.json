@@ -1,0 +1,10 @@
+{
+    "name": "read-openam-session",
+    "request": "GET",
+    "header": {
+        "iplanetDirectoryPro": "tokenId",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/openam/json/users/",
+    "url-payload": "user.$RANDOMVALUE"
+}

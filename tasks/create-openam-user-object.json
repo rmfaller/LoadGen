@@ -1,0 +1,16 @@
+{
+    "name": "create-openam-user-object",
+    "request": "PUT",
+    "service-location-port": "http://openam0.example.com:8080",
+    "header": {
+        "iplanetDirectoryPro": "tokenId",
+        "If-None-Match" : "*",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/openam/json/users/",
+    "url-payload": "user.new.$RANDOMVALUE",
+    "data-payload": {
+        "username": "user.new.$RANDOMVALUE",
+        "userpassword": "password"
+    }
+}

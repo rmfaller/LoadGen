@@ -1,0 +1,16 @@
+{
+    "name": "update-openam-session-property",
+    "request": "POST",
+    "header": {
+        "iplanetDirectoryPro": "tokenId",
+        "accept": "application/json",
+        "accept-api-version": "resource=1.2",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/openam/json/sessions/",
+    "url-payload": "$TOKENID?_action=setProperty",
+    "data-payload":
+            {
+                "rmfproperty0": "$RANDOMVALUE"
+            }
+}

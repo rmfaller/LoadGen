@@ -1,0 +1,21 @@
+{
+    "name": "create-openidm-user-object",
+    "request": "POST",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/openidm/managed/user",
+    "url-payload": "?_action=create",
+    "data-payload": {
+        "userName": "auser.$RANDOMVALUE",
+        "givenName": "auser",
+        "sn": "$RANDOMVALUE",
+        "mail": "auser.$RANDOMVALUE@example.com",
+        "telephoneNumber": "555-123-1234",
+        "password": "Passw0rd",
+        "description": "My first user",
+        "_id": "auser.$RANDOMVALUE"
+    }
+}

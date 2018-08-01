@@ -1,0 +1,8 @@
+{
+    "name": "adminuser-delete-userobject",
+    "tasks": [
+        {
+            "delete-opendj-object-random": 200
+        }
+    ]
+}

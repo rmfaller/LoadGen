@@ -1,0 +1,14 @@
+{
+    "name": "authenticate-read-aad-user-object",
+    "tasks": [
+        {
+            "authenticate-aad-user-object": 4000
+        },
+        {
+            "create-aad-user-object-post" : 4000
+        },
+        {
+            "read-aad-user-object" : 4000
+        }
+    ]
+}

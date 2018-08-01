@@ -1,0 +1,8 @@
+{
+    "name": "patch-user-object",
+    "tasks": [
+        {
+            "patch-opendj-object-random": 800
+        }
+    ]
+}

@@ -1,0 +1,11 @@
+{
+    "name": "authenticate-aad-user-object",
+    "request": "POST",
+    "header": {
+        "Content-Type" : "application/json",
+        "Content-Type" : "application/x-www-form-urlencoded"
+    },
+    "url-endpoint": "/oauth2",
+    "url-payload" : "/token?api-version=1.0",
+    "data-payload" : "grant_type=client_credentials&resource=https%3A%2F%2Fgraph.windows.net&client_id=1b5dabdf-cddc-4f9f-a39b-43bcfb674168&client_secret=SiK2j4zdFlvK%2F8GJc5bNGHtRu5%2FG6pnG4bdriCLVgCc%3D&redirect_uri=https%3A%2F%2Flocalhost%3A8443%2Fadmin%2Foauth.html"
+}

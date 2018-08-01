@@ -1,0 +1,8 @@
+{
+    "name": "adminuser-create-userobject",
+    "tasks": [
+        {
+            "create-opendj-object-random-post": 400
+        }
+    ]
+}

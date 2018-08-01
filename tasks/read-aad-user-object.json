@@ -1,0 +1,12 @@
+{
+    "name": "read-aad-user-object",
+    "service-location-port": "https://graph.windows.net/rmftst04aad.onmicrosoft.com",
+    "request": "GET",
+    "header": {
+        "Authorization" : "$AAD-ACCESS-TOKEN",
+        "Content-Type": "application/json",
+        "Accept" : "application/json"
+    },
+    "url-endpoint": "/users/rmfaller@rmftst04aad.onmicrosoft.com",
+    "url-payload" : "?api-version=1.6"
+}

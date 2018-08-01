@@ -1,0 +1,10 @@
+{
+    "name": "logout-openam-admin",
+    "request": "POST",
+    "header": {
+        "iplanetDirectoryPro" : "tokenId",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/am/json/sessions/",
+    "url-payload": "?_action=logout"
+}

@@ -1,0 +1,492 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<HTML>
+<HEAD>
+	<META HTTP-EQUIV="CONTENT-TYPE" CONTENT="text/html; charset=utf-8">
+	<TITLE></TITLE>
+	<META NAME="GENERATOR" CONTENT="OpenOffice 4.1.1  (Unix)">
+	<META NAME="AUTHOR" CONTENT="Robert Faller">
+	<META NAME="CREATED" CONTENT="20150626;10160700">
+	<META NAME="CHANGEDBY" CONTENT="Robert Faller">
+	<META NAME="CHANGED" CONTENT="20150626;13215400">
+	<STYLE TYPE="text/css">
+	<!--
+		@page { size: 13in 8.5in; margin: 0.02in }
+		P { margin-bottom: 0.08in }
+		A:link { so-language: zxx }
+	-->
+	</STYLE>
+</HEAD>
+<BODY LANG="en-US" DIR="LTR">
+<P ALIGN=CENTER STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=4><B>LoadGen</B></FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Goals
+for the creation of this utility was to generate loads against REST
+endpoints and then to be able to describe a platform profile. There
+generally seems to be two types of load testing.</FONT></FONT></P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Vendor
+	testing:</FONT></FONT></P>
+</OL>
+<UL>
+	<UL>
+		<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">vehicle's
+		top speed</FONT></FONT></P>
+		<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">top
+		ops per second under specific conditions (i.e. 100 million entries
+		with xxxxx authentications per second across two OpenAM instance
+		with 4 cores and 16GB memory)</FONT></FONT></P>
+	</UL>
+</UL>
+<OL START=2>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Customer
+	testing/platform profile</FONT></FONT></P>
+</OL>
+<UL>
+	<UL>
+		<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">driving
+		this vehicle with this load over this type of terrain under these
+		conditions </FONT></FONT><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt"><B>should</B></FONT></FONT>
+		<FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">yield
+		a fuel consumption rate of X. </FONT></FONT>
+		</P>
+		<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">A
+		4 core system with 16GB of memory with 100 million entries and a
+		10% concurrency rate performing these types of task(s) </FONT></FONT><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt"><B>should</B></FONT></FONT>
+		<FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">provide
+		a transaction rate of X with a 200ms or less latency.</FONT></FONT></P>
+	</UL>
+</UL>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Why
+I put the effort into this? Scripted cURL (UNIX shell) is resource
+intensive on the load generator. Used REST so eventually loads can be
+applied to competitive offerings using the same utility and makes
+testing ForgeRock services much easier and flexible. Looked at Jmeter
+and gatling.io. Very good utilities but the learning curve to achieve
+the desired results seemed high for both. Plus needed a utility that
+helped craft a profile of the platform not just stress the platform.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">LoadGen
+uses REST to interact with the services (OpenAM, OpenDJ, OpenIDM) and
+uses json for configuration and testing parameters.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=2><B>Job
+example ($LOADGEN_HOME/config):</B></FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;name&quot;:
+&quot;my job 0&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;service-environment&quot;:
+&quot;one 4xcore 7GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59,
+JDK8, OpenAM 12.0.0 with 200,000 users&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;service-location-port&quot;:
+&quot;http://openam.example.com:8080&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;ADMINUSERID&quot;:
+&quot;adminuser&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;ADMINUSERPASSWORD&quot;:
+&quot;password&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;load-generator&quot;:
+&quot;one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM
+server (example.com)&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;threads&quot;
+:20,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;threadgroupsize&quot;
+: 2,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;threadinterval&quot;
+: 10000,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;upperbounds&quot;
+: 10000,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;workloads&quot;:
+[</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;read-user-object&quot;
+: 1000</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;query-user-objects&quot;
+: 100</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;authenticate-read-logout-user-object&quot;
+: 0</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;create-and-update-user-object&quot;:
+20</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">]</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">The
+value after each workload is the number of iterations that the
+workload should be performed. The <FONT FACE="Consolas, sans-serif"><FONT SIZE=2><B>threads</B></FONT></FONT>
+value is the number of Java threads that will be created and
+executed. Each thread will run the same workloads in the same order.
+Workloads are intermixed based on the quantity of the various
+workloads. If there are 10 workloads of type A and 2 workloads of
+type B then Workload A will be executed 5 times, followed by 1
+Workload B, then 5 more Workload A and 1 Workload B.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">The
+<FONT FACE="Consolas, sans-serif"><FONT SIZE=2><B>threadgroupsize</B></FONT></FONT>
+and <FONT FACE="Consolas, sans-serif"><FONT SIZE=2><B>threadinterval</B></FONT></FONT>
+help regulate the initial spawning of threads. Helps with creating a
+ramped up load and sustainable load. Set to zero to turn off and have
+all threads start at the same time.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Some
+attributes/values can be defined at all three levels - jobs,
+workloads, tasks – such as: service-location, service-port,
+adminuserid, adminuserpassword, randomfile, etc. Precedence: tasks
+override workloads; workloads override jobs.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=2><B>workload
+example ($LOADGEN_HOME/workloads):</B></FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;name&quot;:
+&quot;authenticate-read-logout-user-object&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;persist&quot;
+: [tokenId, ...]</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;tasks&quot;:
+[</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;authenticate-openam-user-object&quot;:
+400</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in">“<FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">sleep”
+: 10</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;read-openam-user-object&quot;
+: 400</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;logout-openam-user-object&quot;
+: 100</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">]</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">The
+value after each task is the millisecond threshold that the task must
+complete in (except for “sleep”). If the task is not completed in
+under the specified ms then it is counted as “exceeded”. If the
+task is “sleep” than the value is added to the millisecond value
+specified in the sleep's “url-payload”. Using a ramped up load
+generation (using threadgroupsize and threadinterval) can skew
+certain aspects of the results. For example total successful
+operations should be considered invalid when a ramped up load is
+utilized.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=2><B>task
+examples; three are listed below. Essentially the data for a
+operational cURL command. ($LOADGEN_HOME/tasks):</B></FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;name&quot;:
+&quot;authenticate-openam-user-object&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;service-location-port&quot;
+: &quot;http://openam0.example.com:8080&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;request&quot;:
+&quot;POST&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;header&quot;:
+{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;X-OpenAM-Username&quot;:
+&quot;user.$RANDOMVALUE&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;X-OpenAM-Password&quot;:
+&quot;password&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;Content-Type&quot;:
+&quot;application/json&quot;</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;url-endpoint&quot;:
+&quot;/openam/json/&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;url-payload&quot;:
+&quot;authenticate&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;data-payload&quot;:
+&quot;{}&quot;</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;name&quot;:
+&quot;create-opendj-user-object&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;request&quot;:
+&quot;PUT&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;header&quot;:
+{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;X-OpenIDM-Username&quot;:
+&quot;$ADMINUSERID&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;X-OpenIDM-Password&quot;:
+&quot;$ADMINUSERPASSWORD&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;Content-Type&quot;:
+&quot;application/json&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;If-None-Match&quot;:
+&quot;*&quot;</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;url-endpoint&quot;
+: &quot;/users/&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;url-payload&quot;:
+&quot;user.new.$RANDOMVALUE&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;data-payload&quot;:
+{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;_id&quot;:
+&quot;user.$RANDOMVALUE&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;contactInformation&quot;:
+{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;telephoneNumber&quot;:
+&quot;+1 408 555 1212&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;emailAddress&quot;:
+&quot;user.new.$RANDOMVALUE@example.com&quot;</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;name&quot;:
+{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;familyName&quot;:
+&quot;New.$RANDOMVALUE&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;givenName&quot;:
+&quot;User&quot;</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;displayName&quot;:
+&quot;User New $RANDOMVALUE&quot;</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;name&quot;:
+&quot;sleep&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;service-location-port&quot;
+: &quot;http://localhost:8080&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;header&quot;:
+{</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;Content-Type&quot;:
+&quot;application/json&quot;</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;url-endpoint&quot;:
+&quot;$SLEEP&quot;,</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">&quot;url-payload&quot;:
+100</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in; border-top: none; border-bottom: 1.10pt double #000000; border-left: none; border-right: none; padding-top: 0in; padding-bottom: 0.03in; padding-left: 0in; padding-right: 0in">
+<FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Output
+from a job with no ramp up:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Job
+Started with 4 threads on Fri Jun 26 11:58:36 PDT 2015...and
+completed Fri Jun 26 11:59:43 PDT 2015</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Operation
+TxTotal AccmTime Thrshold TxPass PassTime TxExced ExcdTime TxFail
+Failtime CbdPsOps ThrdOps Avrms/op Success Exceed Fail</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">read-opendj-user-object
+40000 211.088s 400ms 39991 211.023s 0 0.000s 9 0.065s 758.041/s
+189.510/s 5.277ms/op 99.98% 0.00% 0.02%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">query-opendj-user-objects
+4000 34.814s 400ms 3999 34.809s 0 0.000s 1 0.005s 459.536/s 114.884/s
+8.704ms/op 99.97% 0.00% 0.03%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">create-opendj-user-object
+40 1.803s 400ms 40 1.803s 0 0.000s 0 0.000s 88.741/s 22.185/s
+45.075ms/op 100.00% 0.00% 0.00%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">update-opendj-new-user-object
+40 1.032s 200ms 38 0.596s 2 0.436s 0 0.000s 255.034/s 63.758/s
+15.684ms/op 95.00% 5.00% 0.00%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">read-opendj-new-user-object
+80 1.277s 200ms 76 1.277s 0 0.000s 4 0.000s 238.058/s 59.514/s
+16.803ms/op 95.00% 0.00% 5.00%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Job
+lapsed time = 66399ms</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Passed
+Accum time = 249508ms</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Total
+Threads = 4</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Thread
+group size = 0</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Launch
+interval = 1000ms</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Transaction
+goal = 44160</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Transction
+actual = 44144</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Successful
+ops/s = 707.697 </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Ops/s
+during job = 664.829 </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Success
+rate = 99.96%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Total
+sleep sec = 12.179 </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Based
+on following workloads:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Workload:
+read-user-object with 40000 loops; Percent load = 90.33%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Tasks
+used:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">read-opendj-user-object</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Workload:
+query-user-objects with 4000 loops; Percent load = 9.03%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Tasks
+used:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">query-opendj-user-objects</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Workload:
+create-and-update-user-object with 40 loops; Percent load = 0.63%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Tasks
+used:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">create-opendj-user-object</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">sleep</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">update-opendj-new-user-object</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">sleep</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">read-opendj-new-user-object</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">sleep</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">read-opendj-new-user-object</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Target
+environment(s): mac laptop running two OpenDJ 2.6.2 instance in vbox,
+replicated, behind haproxy</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Load
+generator: mac laptop running JDK 8</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in; border-top: none; border-bottom: 1.10pt double #000000; border-left: none; border-right: none; padding-top: 0in; padding-bottom: 0.03in; padding-left: 0in; padding-right: 0in">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">But
+when a job “ramps up” then the combined pass operations
+(CbdPsOps) as well as “<FONT FACE="Consolas, sans-serif">Successful
+ops/s =</FONT>” are skewed and is invalid.</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in; border-top: none; border-bottom: 1.10pt double #000000; border-left: none; border-right: none; padding-top: 0in; padding-bottom: 0.03in; padding-left: 0in; padding-right: 0in">
+<BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Job
+Started with 32 threads on Fri Jun 26 17:33:06 UTC 2015...and
+completed Fri Jun 26 19:09:41 UTC 2015</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Operation
+TxTotal AccmTime Thrshold TxPass PassTime TxExced ExcdTime TxFail
+Failtime CbdPsOps ThrdOps Avrms/op Success Exceed Fail</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">authenticate-openam-user-object
+8000 195.228s 200ms 7932 181.388s 68 13.840s 0 0.000s 1399.343/s
+43.729/s 22.868ms/op 99.15% 0.85% 0.00%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">validate-openam-user-session
+16000 42.684s 100ms 15861 42.376s 3 0.308s 136 0.000s 11977.346/s
+374.292/s 2.672ms/op 99.13% 0.02% 0.85%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">logout-openam-user-object
+8000 25.430s 100ms 7927 25.223s 2 0.207s 71 0.000s 10056.854/s
+314.277/s 3.182ms/op 99.09% 0.03% 0.89%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Job
+lapsed time = 5795471ms</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Passed
+Accum time = 248987ms</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Total
+Threads = 32</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Thread
+group size = 1</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Launch
+interval = 10000ms</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Transaction
+goal = 32000</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Transction
+actual = 31720</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Successful
+ops/s = 4076.679</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Ops/s
+during job = 5.473 </FONT></FONT>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Success
+rate = 99.13%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Total
+sleep sec = 174473.266</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Based
+on following workloads:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Workload:
+authenticate-read-logout-user-object with 8000 loops; Percent load =
+100.00%</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Tasks
+used:</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">authenticate-openam-user-object</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">validate-openam-user-session</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">sleep</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">validate-openam-user-session</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">sleep</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">logout-openam-user-object</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Target
+environment(s): one 4xcore 7GB Ubuntu 14.04 VM in Azure Apache Tomcat
+7.59, JDK8, OpenAM 12.0.0 with 200,000 users</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in; border-top: none; border-bottom: 1.10pt double #000000; border-left: none; border-right: none; padding-top: 0in; padding-bottom: 0.03in; padding-left: 0in; padding-right: 0in">
+<FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Load
+generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM
+server (example.com)</FONT></FONT></P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=2><B>Need:</B></FONT></FONT></P>
+<OL>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Website/REST
+	endpoint to provide sleep as well as OpenAM agent</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Random
+	reads from files for user ids and data</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Definable
+	at jobs, workloads, and tasks levels with said precedence.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Website
+	to build and run tests. Test as a service or trial or download war
+	from backstage (need to authenticate)</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Fix
+	PATCH for OpenDJ and OpenIDM</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Need
+	to inject random read from file.</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Workload
+	needs to specify if value needs to be persisted across tasks by
+	specifying the attribute name returned by the a task operation i.e.
+	tokenId</FONT></FONT></P>
+	<LI><P STYLE="margin-bottom: 0in"><FONT FACE="DejaVu Sans, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">Define
+	wildcards:</FONT></FONT></P>
+</OL>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">WILDCARDS
+: [</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">name
+: $RANDOMVALUE,</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">type
+: generated</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">name
+: $TOKENID,</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">type
+: retained</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">name
+: $FILE-A,</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">type
+: file,</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">source
+: path to file</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">},</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">{</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">name
+: $OBJECT-O,</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">type
+: rest-endpoint,</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">source
+: url to object</FONT></FONT></P>
+<P STYLE="margin-left: 1in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">]</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><FONT FACE="Consolas, sans-serif"><FONT SIZE=1 STYLE="font-size: 8pt">}</FONT></FONT></P>
+<P STYLE="margin-left: 0.5in; margin-bottom: 0in"><BR>
+</P>
+<P STYLE="margin-bottom: 0in"><BR>
+</P>
+</BODY>
+</HTML>

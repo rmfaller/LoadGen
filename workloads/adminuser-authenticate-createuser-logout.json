@@ -1,0 +1,14 @@
+{
+    "name": "adminuser-authenticate-createuser-logout",
+    "tasks": [
+        {
+            "authenticate-openam-admin": 5000
+        },
+        {
+            "create-openam-user-object-post" : 5000
+        },
+        {
+            "logout-openam-admin" : 2000
+        }
+    ]
+}

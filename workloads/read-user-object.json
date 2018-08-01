@@ -1,0 +1,8 @@
+{
+    "name": "read-user-object",
+    "tasks": [
+        {
+            "read-opendj-user-object": 800
+        }
+    ]
+}

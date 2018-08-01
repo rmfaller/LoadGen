@@ -1,0 +1,13 @@
+{
+    "name": "read-openam-session-property",
+    "request": "POST",
+    "header": {
+        "iplanetDirectoryPro": "tokenId",
+        "Content-Type": "application/json",
+        "accept": "application/json",
+        "accept-api-version": "resource=1.2"
+    },
+    "url-endpoint": "/openam/json/sessions?",
+    "url-payload": "tokenId=$TOKENID&_action=getProperty",
+    "data-payload": "{\"properties\": [\"rmfproperty0\"]}"
+}

@@ -1,0 +1,29 @@
+{
+    "name": "Warmup OpenDJ by authenticating and reading user objects",
+    "service-environment": "mac laptop running vbox hosting ubuntu (2 cores, 8GB) running an OpenDJ 3.5 instance loaded w/5,000,000 objects",
+    "service-location-port": "http://base.example.com:8080",
+    "ADMINUSERID": "adminuser",
+    "ADMINUSERPASSWORD": "password",
+    "load-generator": "mac laptop running JDK 8",
+    "threads": 1,
+    "threadgroupsize": 0,
+    "threadinterval": 0,
+    "upperbounds": 5000000,
+    "workloads": [
+        {
+            "adminuser-create-userobject": 500
+        },
+        {
+            "adminuser-delete-userobject": 250
+        },
+        {
+            "adminuser-wildcardsearch-userobject": 25000
+        },
+        {
+            "user-update-userobject": 5000
+        },
+        {
+            "user-read-userobject": 50000
+        }
+    ]
+}

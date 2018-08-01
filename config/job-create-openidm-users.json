@@ -1,0 +1,17 @@
+{
+    "name": "create-openidm-users",
+    "service-environment": "VirtualBox with one core, Ubuntu 14.04, JDK 1.8, OpenIDM 4 with default repo",
+    "service-location-port": "http://192.168.0.16:8080",
+    "ADMINUSERID": "openidm-admin",
+    "ADMINUSERPASSWORD": "openidm-admin",
+    "load-generator": "Mac",
+    "threads": 1,
+    "threadgroupsize": 0,
+    "threadinterval": 100,
+    "upperbounds": 50000,
+    "workloads": [
+        {
+            "create-openidm-user-object": 5000
+        }
+    ]
+}

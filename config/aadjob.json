@@ -1,0 +1,17 @@
+{
+    "name": "AAD Test Job",
+    "service-environment": "mac laptop to AAD tenant",
+    "service-location-port": "https://login.microsoftonline.com/rmftst04aad.onmicrosoft.com",
+    "ADMINUSERID": "wake@rmftst04aad.onmicrosoft.com",
+    "ADMINUSERPASSWORD": "zer0!Two",
+    "load-generator": "mac laptop running JDK 8",
+    "threads": 1,
+    "threadgroupsize": 0,
+    "threadinterval": 100,
+    "upperbounds": 10,
+    "workloads": [
+        {
+            "authenticate-read-aad-user-object" : 1
+        }
+    ]
+}

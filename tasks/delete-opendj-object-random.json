@@ -1,0 +1,11 @@
+{
+    "name": "delete-opendj-object-random",
+    "request": "DELETE",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint" : "/api/users/",
+    "url-payload": "user.$RANDOMVALUE"
+}

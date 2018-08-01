@@ -1,0 +1,17 @@
+{
+    "name": "AM5 test to gauge AuthN, Validate, and read attributes",
+    "service-environment": "2 VBox Ubuntu instances (2 cores, 8GB per instance) - OpenAM 13.5 w/embedded CTS; OpenDJ 3.5.2 w/2M entries on its own Vbox instance",
+    "service-location-port": "http://am.example.com:8080",
+    "ADMINUSERID": "amadmin",
+    "ADMINUSERPASSWORD": "ForgeRock",
+    "load-generator": "same mac laptop running JDK 8 (averages 60% - 70% idle)",
+    "threads": 6,
+    "threadgroupsize": 0,
+    "threadinterval": 0,
+    "upperbounds": 9000,
+    "workloads": [
+        {
+            "authenticate-readsession-updatesession-logout": 200
+        }
+    ]
+}

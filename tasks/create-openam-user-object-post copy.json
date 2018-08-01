@@ -1,0 +1,15 @@
+{
+    "name": "create-openam-user-object-post",
+    "request": "POST",
+    "header": {
+        "iplanetDirectoryPro": "tokenId",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/openam/json/users/",
+    "url-payload": "?_action=create",
+    "data-payload": {
+        "username": "user.$THREADID.$INCREMENT",
+        "userpassword": "password",
+        "mail": "user.$THREADID.$INCREMENT@example.com"
+    }
+}

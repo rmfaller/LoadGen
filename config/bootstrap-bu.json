@@ -1,0 +1,22 @@
+{
+    "name": "my job 0",
+    "service-environment": "mac laptop running OpenDJ 2.6.2",
+    "service-location": "http://192.168.1.90:",
+    "service-port": "8080",
+    "ADMINUSERID": "adminuser",
+    "ADMINUSERPASSWORD": "password",
+    "load-generator": "mac laptop running JDK 8",
+    "threads" : 1,
+    "upperbounds" : 200,
+    "workloads": [
+        {
+            "read-user-object": 0
+        },
+        {
+            "query-user-objects" : 0
+        },
+        {
+            "create-and-update-user-object": 1
+        }
+    ]
+}

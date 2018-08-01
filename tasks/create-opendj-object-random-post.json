@@ -1,0 +1,25 @@
+{
+    "name": "create-opendj-object-random-post",
+    "request": "POST",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Accept" : "application/json",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint" : "/api/users",
+    "url-payload": "?_action=create",
+    "data-payload": {
+        "_id": "user.$THREADID.$RANDOMVALUE",
+        "_schema":"frapi:opendj:rest2ldap:user:1.0",
+        "contactInformation": {
+            "telephoneNumber": "+1 408 555 1212",
+            "emailAddress": "user.$THREADID.$RANDOMVALUE@example.com"
+        },
+        "name": {
+            "familyName": "$RANDOMVALUE",
+            "givenName": "User"
+        },
+        "displayName": ["User $THREADID $RANDOMVALUE"]
+    }
+}

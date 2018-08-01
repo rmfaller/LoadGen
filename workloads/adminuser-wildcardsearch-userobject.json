@@ -1,0 +1,8 @@
+{
+    "name": "adminuser-wildcardsearch-userobject",
+    "tasks": [
+        {
+            "admin-query-opendj-user-objects": 500
+        }
+    ]
+}

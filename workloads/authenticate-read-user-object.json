@@ -1,0 +1,11 @@
+{
+    "name": "authenticate-read-user-object",
+    "tasks": [
+        {
+            "authenticate-openam-user-object": 400
+        },
+        {
+            "read-openam-user-object" : 400
+        }
+    ]
+}

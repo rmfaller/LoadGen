@@ -1,0 +1,265 @@
+Job Started with 4 threads on Mon Jun 22 21:00:55 UTC 2015...and completed Mon Jun 22 21:07:59 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object      40000  256.193s     200ms     39651  237.906s       349   18.288s         0    0.000s   166.667/s    6.000ms/op    99.13%     0.87%     0.00%
+validate-openam-user-session         80000   43.005s     100ms     79301   43.005s         0    0.000s       699    0.001s  1844.038/s    0.542ms/op    99.13%     0.00%     0.87%
+read-openam-user-object              40000   98.791s     200ms     39650   98.740s         1    0.051s       349    0.000s   401.560/s    2.490ms/op    99.13%     0.00%     0.87%
+logout-openam-user-object            40000   25.068s     100ms     39650   25.067s         0    0.000s       350    0.001s  1581.761/s    0.632ms/op    99.13%     0.00%     0.88%
+Job lapsed time =	424081ms
+Work Lapsed time =	423056ms
+Total Threads =		4
+Transaction goal =	200000
+Transction actual =	198252
+Successful ops/s =	468.619 
+Success rate =		99.13%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 40000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+================
+
+Job Started with 6 threads on Mon Jun 22 21:44:11 UTC 2015...and completed Mon Jun 22 21:52:00 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object      60000  263.983s     200ms     59994  263.767s         6    0.216s         0    0.000s   227.451/s    4.397ms/op    99.99%     0.01%     0.00%
+validate-openam-user-session        120000   50.657s     100ms    119988   50.657s         0    0.000s        12    0.000s  2368.636/s    0.422ms/op    99.99%     0.00%     0.01%
+read-openam-user-object              60000  124.477s     200ms     59994  124.477s         0    0.000s         6    0.000s   481.969/s    2.075ms/op    99.99%     0.00%     0.01%
+logout-openam-user-object            60000   29.530s     100ms     59994   29.530s         0    0.000s         6    0.000s  2031.629/s    0.492ms/op    99.99%     0.00%     0.01%
+Job lapsed time =	469728ms
+Work Lapsed time =	468646ms
+Total Threads =		6
+Transaction goal =	300000
+Transction actual =	299970
+Successful ops/s =	640.078 
+Success rate =		99.99%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 60000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+==================
+
+Job Started with 8 threads on Mon Jun 22 21:52:55 UTC 2015...and completed Mon Jun 22 22:02:37 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object      80000  343.943s     200ms     79962  342.967s        38    0.976s         0    0.000s   233.148/s    4.289ms/op    99.95%     0.05%     0.00%
+validate-openam-user-session        160000   52.510s     100ms    159920   52.496s         1    0.013s        79    0.000s  3046.327/s    0.328ms/op    99.95%     0.00%     0.05%
+read-openam-user-object              80000  153.449s     200ms     79959  153.373s         3    0.076s        38    0.000s   521.337/s    1.918ms/op    99.95%     0.00%     0.05%
+logout-openam-user-object            80000   30.335s     100ms     79957   30.322s         1    0.013s        42    0.000s  2637.017/s    0.379ms/op    99.95%     0.00%     0.05%
+Job lapsed time =	581578ms
+Work Lapsed time =	580234ms
+Total Threads =		8
+Transaction goal =	400000
+Transction actual =	399798
+Successful ops/s =	689.029 
+Success rate =		99.95%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 80000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+==================
+
+Job Started with 10 threads on Mon Jun 22 22:03:36 UTC 2015...and completed Mon Jun 22 22:15:14 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object     100000  425.720s     200ms     99961  424.916s        39    0.804s         0    0.000s   235.249/s    4.251ms/op    99.96%     0.04%     0.00%
+validate-openam-user-session        200000   55.668s     100ms    199921   55.668s         0    0.000s        79    0.000s  3591.309/s    0.278ms/op    99.96%     0.00%     0.04%
+read-openam-user-object             100000  183.547s     200ms     99960  183.526s         1    0.020s        39    0.000s   544.664/s    1.836ms/op    99.96%     0.00%     0.04%
+logout-openam-user-object           100000   31.481s     100ms     99959   31.467s         1    0.014s        40    0.000s  3176.630/s    0.315ms/op    99.96%     0.00%     0.04%
+Job lapsed time =	698008ms
+Work Lapsed time =	696414ms
+Total Threads =		10
+Transaction goal =	500000
+Transction actual =	499801
+Successful ops/s =	717.678 
+Success rate =		99.96%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 100000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+=================
+
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object     120000  517.684s     200ms    119707  512.740s       292    4.927s         1    0.017s   233.465/s    4.283ms/op    99.76%     0.24%     0.00%
+validate-openam-user-session        240000   57.655s     100ms    239375   57.405s        23    0.250s       602    0.000s  4170.006/s    0.240ms/op    99.74%     0.01%     0.25%
+read-openam-user-object             120000  214.661s     200ms    119691  214.576s         5    0.085s       304    0.000s   557.805/s    1.793ms/op    99.74%     0.00%     0.25%
+logout-openam-user-object           120000   32.356s     100ms    119676   32.331s         3    0.025s       321    0.000s  3701.701/s    0.270ms/op    99.73%     0.00%     0.27%
+Job lapsed time =	823840ms
+Work Lapsed time =	822353ms
+Total Threads =		12
+Transaction goal =	600000
+Transction actual =	598449
+Successful ops/s =	727.728 
+Success rate =		99.74%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 120000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+==================
+
+Job Started with 14 threads on Mon Jun 22 22:32:19 UTC 2015...and completed Mon Jun 22 22:48:23 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object     140000  619.000s     200ms    139941  618.131s        59    0.870s         0    0.000s   226.394/s    4.417ms/op    99.96%     0.04%     0.00%
+validate-openam-user-session        280000   57.832s     100ms    279871   57.823s         1    0.009s       128    0.000s  4840.217/s    0.207ms/op    99.95%     0.00%     0.05%
+read-openam-user-object             140000  252.344s     200ms    139931  252.210s         9    0.134s        60    0.000s   554.819/s    1.802ms/op    99.95%     0.01%     0.04%
+logout-openam-user-object           140000   32.416s     100ms    139930   32.406s         1    0.009s        69    0.000s  4318.027/s    0.232ms/op    99.95%     0.00%     0.05%
+Job lapsed time =	963617ms
+Work Lapsed time =	961591ms
+Total Threads =		14
+Transaction goal =	700000
+Transction actual =	699673
+Successful ops/s =	727.620 
+Success rate =		99.95%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 140000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+===============
+
+Job Started with 16 threads on Mon Jun 22 22:50:15 UTC 2015...and completed Mon Jun 22 23:08:38 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object     160000  719.987s     200ms    159833  717.854s       167    2.133s         0    0.000s   222.654/s    4.491ms/op    99.90%     0.10%     0.00%
+validate-openam-user-session        320000   58.307s     100ms    319654   58.285s         3    0.023s       343    0.000s  5484.421/s    0.182ms/op    99.89%     0.00%     0.11%
+read-openam-user-object             160000  289.451s     200ms    159824  289.348s         8    0.103s       168    0.000s   552.359/s    1.810ms/op    99.89%     0.00%     0.10%
+logout-openam-user-object           160000   32.723s     100ms    159821   32.712s         1    0.010s       178    0.000s  4885.699/s    0.205ms/op    99.89%     0.00%     0.11%
+Job lapsed time =	1102909ms
+Work Lapsed time =	1100466ms
+Total Threads =		16
+Transaction goal =	800000
+Transction actual =	799132
+Successful ops/s =	726.176 
+Success rate =		99.89%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 160000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+=================
+
+Job Started with 18 threads on Mon Jun 22 23:35:47 UTC 2015...and completed Mon Jun 22 23:56:43 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object     180000  840.169s     200ms    179800  837.892s       200    2.277s         0    0.000s   214.586/s    4.660ms/op    99.89%     0.11%     0.00%
+validate-openam-user-session        360000   54.812s     100ms    359588   54.797s         2    0.015s       410    0.000s  6562.304/s    0.152ms/op    99.89%     0.00%     0.11%
+read-openam-user-object             180000  328.317s     200ms    179790  328.225s         8    0.091s       202    0.000s   547.764/s    1.826ms/op    99.88%     0.00%     0.11%
+logout-openam-user-object           180000   31.035s     100ms    179786   31.010s         4    0.026s       210    0.000s  5797.865/s    0.172ms/op    99.88%     0.00%     0.12%
+Job lapsed time =	1256104ms
+Work Lapsed time =	1254331ms
+Total Threads =		18
+Transaction goal =	900000
+Transction actual =	898964
+Successful ops/s =	716.688 
+Success rate =		99.88%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 180000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+======================
+
+Job Started with 20 threads on Tue Jun 23 00:03:38 UTC 2015...and completed Tue Jun 23 00:27:19 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object     200000  965.360s     200ms    198983  955.078s       978    9.892s        39    0.390s   208.342/s    4.800ms/op    99.49%     0.49%     0.02%
+validate-openam-user-session        400000   54.160s     100ms    397685   53.439s       142    0.721s      2173    0.000s  7441.989/s    0.134ms/op    99.42%     0.04%     0.54%
+read-openam-user-object             200000  368.465s     200ms    198844  368.314s        15    0.151s      1141    0.000s   539.878/s    1.852ms/op    99.42%     0.01%     0.57%
+logout-openam-user-object           200000   30.274s     100ms    198825   30.269s         1    0.005s      1174    0.000s  6568.602/s    0.152ms/op    99.41%     0.00%     0.59%
+Job lapsed time =	1420083ms
+Work Lapsed time =	1418258ms
+Total Threads =		20
+Transaction goal =	1000000
+Transction actual =	994337
+Successful ops/s =	701.097 
+Success rate =		99.43%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 200000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+==================
+
+Job Started with 22 threads on Tue Jun 23 00:29:29 UTC 2015...and completed Tue Jun 23 00:55:19 UTC 2015
+Operation                          TxTotal  LpsdTime  Thrshold    TxPass  PassTime   TxExced  ExcdTime    TxFail  Failtime    AvrPsOps      Avrms/op   Success    Exceed      Fail
+authenticate-openam-user-object     220000 1062.362s     200ms    219582 1058.489s       418    3.873s         0    0.000s   207.449/s    4.820ms/op    99.81%     0.19%     0.00%
+validate-openam-user-session        440000   52.438s     100ms    439142   52.429s         2    0.009s       856    0.000s  8376.097/s    0.119ms/op    99.81%     0.00%     0.19%
+read-openam-user-object             220000  403.779s     200ms    219562  403.601s        19    0.177s       419    0.000s   544.008/s    1.838ms/op    99.80%     0.01%     0.19%
+logout-openam-user-object           220000   30.032s     100ms    219559   30.020s         2    0.012s       439    0.000s  7313.757/s    0.137ms/op    99.80%     0.00%     0.20%
+Job lapsed time =	1550404ms
+Work Lapsed time =	1548608ms
+Total Threads =		22
+Transaction goal =	1100000
+Transction actual =	1097845
+Successful ops/s =	708.924 
+Success rate =		99.80%
+Based on following workloads:
+	Workload: authenticate-read-logout-user-object with 220000 loops;	Percent load = 100.00%
+	Tasks used:
+		authenticate-openam-user-object
+		validate-openam-user-session
+		read-openam-user-object
+		validate-openam-user-session
+		logout-openam-user-object
+Target environment(s): one 2xcore 3.5GB Ubuntu 14.04 VM in Azure Apache Tomcat 7.59, JDK8, OpenAM 12.0.0 with 200,000 users
+Load generator: one 2xcore Ubuntu 14.04 VM in Azure on same vnet at OpenAM server (example.com)
+
+==========
+
+
+
+
+
+
+

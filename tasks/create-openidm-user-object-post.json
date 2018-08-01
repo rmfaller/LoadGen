@@ -1,0 +1,21 @@
+{
+    "name": "create-openidm-user-object-post",
+    "request": "POST",
+    "header": {
+        "X-OpenIDM-Username": "openidm-admin",
+        "X-OpenIDM-Password": "openidm-admin",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/openidm/managed/user",
+    "url-payload": "?_action=create",
+    "data-payload": {
+        "userName": "user.$THREADID.$INCREMENT",
+        "givenName": "User",
+        "sn": "$THREADID.$INCREMENT",
+        "telephoneNumber": "123-456-7890",
+        "description": "Managed user object for user.$INCREMENT",
+        "password": "AbcD-0123$",
+        "mail": "user.$THREADID.$INCREMENT@example.com",
+        "_id": "user.$THREADID.$INCREMENT"
+    }
+}

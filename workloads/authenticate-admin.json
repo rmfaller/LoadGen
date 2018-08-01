@@ -1,0 +1,11 @@
+{
+    "name": "authenticate-admin",
+    "tasks": [
+        {
+            "authenticate-openam-admin": 400
+        },
+        {
+            "create-openam-user-object-post": 1000
+        }
+    ]
+}

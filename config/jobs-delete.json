@@ -1,0 +1,35 @@
+{
+    "name": "JVM tuning 0",
+    "service-environment": "Azure A2 - 2 cores, 3.5GB, Ubuntu 14.04, JDK 1.8, OpenDJ 2.6.3, start-ds.java-args=-server",
+    "service-location-port": "http://10.0.0.5:8080",
+    "ADMINUSERID": "adminuser",
+    "ADMINUSERPASSWORD": "password",
+    "load-generator": "Azure A2 - 2 cores, 3.5GB, Ubuntu 14.04 on same vnet as service host",
+    "threads": 1,
+    "threadgroupsize": 0,
+    "threadinterval": 100,
+    "upperbounds": 50000,
+    "workloads": [
+        {
+            "read-user-object": 0
+        },
+        {
+            "query-user-objects": 0
+        },
+        {
+            "authenticate-read-logout-user-object": 0
+        },
+        {
+            "authenticate-admin-create-user-logout": 0
+        },
+        {
+            "create-and-update-user-object": 0
+        },
+        {
+            "create-user-object": 0
+        },
+        {
+            "delete-user-object" : 20000
+        }
+    ]
+}

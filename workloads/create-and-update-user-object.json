@@ -1,0 +1,26 @@
+{
+    "name": "create-and-update-user-object",
+    "tasks": [
+        {
+            "create-opendj-object-random": 400
+        },
+        {
+            "sleep" : 1
+        },
+        {
+            "update-opendj-object-random": 800
+        },
+        {
+            "sleep" : 1
+        },
+        {
+            "read-opendj-new-user-object" : 200
+        },
+        {
+            "sleep" : 1
+        },
+        {
+            "read-opendj-new-user-object" : 200
+        }
+    ]
+}

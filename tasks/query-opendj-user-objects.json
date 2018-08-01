@@ -1,0 +1,11 @@
+{
+    "name": "query-opendj-user-objects",
+    "request": "GET",
+    "header": {
+        "X-OpenIDM-Username": "user.$RANDOMVALUE",
+        "X-OpenIDM-Password": "password",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/api/users/",
+    "url-payload": "?_queryFilter=_id+eq+'user.$RANDOMVALUE'"
+}

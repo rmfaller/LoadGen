@@ -1,0 +1,22 @@
+{
+    "name": "create-aad-user-object-post",
+    "request": "POST",
+    "service-location-port": "https://graph.windows.net/rmftst04aad.onmicrosoft.com",
+    "header": {
+        "Authorization" : "$AAD-ACCESS-TOKEN",
+        "Content-Type": "application/json",
+        "Accept" : "application/json"
+     },
+    "url-endpoint": "/users",
+    "url-payload" : "?api-version=1.6",
+    "data-payload": {
+        "accountEnabled": true,
+        "passwordProfile": {
+            "password" : "Test1234",
+            "forceChangePasswordNextLogin" : false
+        },
+        "displayName" : "User $THREADID $INCREMENT",
+        "mailNickname" : "User.$THREADID.$INCREMENT",
+        "userPrincipalName": "user.$THREADID.$INCREMENT@rmftst04aad.onmicrosoft.com"
+    }
+}

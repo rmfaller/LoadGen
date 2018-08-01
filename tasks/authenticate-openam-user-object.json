@@ -1,0 +1,11 @@
+{
+    "name": "authenticate-openam-user-object",
+    "request": "POST",
+    "header": {
+        "X-OpenAM-Username": "user.$RANDOMVALUE",
+        "X-OpenAM-Password": "password",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/openam/json/",
+    "url-payload": "authenticate"
+}

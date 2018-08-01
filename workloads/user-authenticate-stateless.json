@@ -1,0 +1,8 @@
+{
+    "name": "authenticate-read-logout-user-object",
+    "tasks": [
+        {
+            "authenticate-openam-user-object": 200
+        }
+    ]
+}

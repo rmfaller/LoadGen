@@ -1,0 +1,116 @@
+Need:
+    website/REST endpoint to provide sleep as well as OpenAM agent
+    random reads from files for user ids and data
+
+Website to build and run tests. Test as a service or trial or download war from backstage (need to authenticate)
+Fix PATCH for OpenDJ and OpenIDM
+Some values (service-location, service-endpoint) can be defined at the job level but can be overridden at the workload or task level
+Need to inject random read from file. Define wildcards:
+WILDCARDS : [
+{
+name : $RANDOMVALUE,
+type : generated,
+},
+{
+name : $TOKENID,
+type : retained,
+{
+name : $FILE-A  
+type : file
+source : path to file
+},
+{
+name : $OBJECT-O
+type : rest-endpoint
+source : url to object
+}
+]}
+
+workload needs to specify if value needs to be persisted across tasks by specifying the attribute name returned by the a task operation i.e. tokenId
+
+Attributes that can be defined at all three levels - jobs, workloads, tasks: service-location, service-port, adminuserid, adminuserpassword, randomfile, etc.
+Precedence: tasks override workloads; workloads override jobs.
+
+Job example:
+{
+    "name": "my job 0",
+    "service-environment": "mac laptop running OpenDJ 2.6.2",
+    "service-location-port": "http://192.168.1.90:8080",
+    "ADMINUSERID": "adminuser",
+    "ADMINUSERPASSWORD": "password",
+    "load-generator": "mac laptop running JDK 8",
+    "threads" :2,
+    "upperbounds" : 10000,
+    "workloads": [
+        {
+            "read-user-object" : 1000
+        },
+        {
+            "query-user-objects" : 100
+        },
+        {
+            "authenticate-read-logout-user-object" : 0
+        },
+        {
+            "create-and-update-user-object": 20
+        }
+    ]
+}
+
+workload example:
+{
+    "name": "authenticate-read-logout-user-object",
+    "persist" : [tokenId, ...]
+    "tasks": [
+        {
+            "authenticate-openam-user-object": 400
+        },
+        {
+            "read-openam-user-object" : 400
+        },
+        {
+            "logout-openam-user-object" : 100
+        }
+    ]
+}
+
+task examples (essentially the data for a operational cURL command):
+{
+    "name": "authenticate-openam-user-object",
+    "service-location-port" : "http://openam0.example.com:8080",
+    "request": "POST",
+    "header": {
+        "X-OpenAM-Username": "user.$RANDOMVALUE",
+        "X-OpenAM-Password": "password",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint": "/openam/json/",
+    "url-payload": "authenticate",
+    "data-payload": "{}"
+}
+
+{
+    "name": "create-opendj-user-object",
+    "request": "PUT",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json",
+        "If-None-Match": "*"
+    },
+    "url-endpoint" : "/users/",
+    "url-payload": "user.new.$RANDOMVALUE",
+    "data-payload": {
+        "_id": "user.$RANDOMVALUE",
+        "contactInformation": {
+            "telephoneNumber": "+1 408 555 1212",
+            "emailAddress": "user.new.$RANDOMVALUE@example.com"
+        },
+        "name": {
+            "familyName": "New.$RANDOMVALUE",
+            "givenName": "User"
+        },
+        "displayName": "User New $RANDOMVALUE"
+    }
+}
+

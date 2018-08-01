@@ -1,0 +1,63 @@
+{
+    "name": "ForgeRock Platform Test",
+    "version": 1,
+    "warmup": ["am-state", "ds-state", "idm-state"],
+    "service-location-port": "http://am0.example.com:8080",
+    "threads": 2,
+    "threadgroupsize": 0,
+    "threadspawninterval": 0,
+    "upperbounds": 100000,
+    "workload": ["create-identity", "update-identity"],
+    "create-identity": [
+        {
+            "task": ["adminuser-authenticate", "adminuser-create-identity", "adminuser-logout"],
+            "iterations": 0
+        },
+        {
+            "query-user-objects": 0
+        }
+    ],
+    "update-identity": [
+        {
+            "task": ["identity-authenticate", "adminuser-create-identity"],
+            "iterations": 0
+        }
+    ],
+    
+    
+    "adminuser-authenticate": { 
+        "threshold": 200,
+        "request": "POST",
+        "header": {
+            "X-OpenAM-Username": "amadmin",
+            "X-OpenAM-Password": "password",
+            "Content-Type": "application/json"
+        },
+        "url-endpoint": "/am/json/",
+        "url-payload": "authenticate"
+    },
+    "adminuser-create-identity": {
+        "threshold": 5000,
+        "request": "POST",
+        "header": {
+            "iplanetDirectoryPro": "tokenId",
+            "Content-Type": "application/json"
+        },
+        "url-endpoint": "/am/json/users/",
+        "url-payload": "?_action=create",
+        "data-payload": {
+            "username": "user.$INCREMENT",
+            "userpassword": "password",
+            "mail": "user.$INCREMENT@example.com"
+        }
+    },
+    "adminuser-logout": {
+        "request": "POST",
+        "header": {
+            "iplanetDirectoryPro": "tokenId",
+            "Content-Type": "application/json"
+        },
+        "url-endpoint": "/am/json/sessions/",
+        "url-payload": "?_action=logout"
+    }
+}
