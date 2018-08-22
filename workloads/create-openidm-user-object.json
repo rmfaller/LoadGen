@@ -2,7 +2,7 @@
     "name": "create-openidm-user-object",
     "tasks": [
         {
-            "create-openidm-user-object-post": 1600
+            "create-openidm-user-object-post": 2000
         }
     ]
 }

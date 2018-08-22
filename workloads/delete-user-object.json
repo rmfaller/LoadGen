@@ -2,7 +2,7 @@
     "name": "delete-user-object",
     "tasks": [
         {
-            "delete-opendj-object-increment": 1000
+            "delete-openidm-object-increment": 2000
         }
     ]
 }

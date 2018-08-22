@@ -1,0 +1,11 @@
+{
+    "name": "delete-opendj-object-increment",
+    "request": "DELETE",
+    "header": {
+        "X-OpenIDM-Username": "$ADMINUSERID",
+        "X-OpenIDM-Password": "$ADMINUSERPASSWORD",
+        "Content-Type": "application/json"
+    },
+    "url-endpoint" : "/openidm/managed/user/",
+    "url-payload": "user.$THREADID.$INCREMENT"
+}

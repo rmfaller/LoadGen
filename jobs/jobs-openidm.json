@@ -1,17 +1,17 @@
 {
     "name": "OpenIDM repo shake out",
     "service-environment": "mac laptop hosting VirtualBox hosting Ubuntu 14.04 running OpenIDM 4.5.0",
-    "service-location-port": "http://192.168.0.10:8080",
+    "service-location-port": "http://am0.example.com:8080",
     "ADMINUSERID": "openidm-admin",
     "ADMINUSERPASSWORD": "openidm-admin",
     "load-generator": "mac laptop running JDK 8",
-    "threads": 4,
+    "threads": 2,
     "threadgroupsize": 0,
     "threadinterval": 0,
     "upperbounds": 2000000,
     "workloads": [
         {
-            "create-openidm-user-object": 1000
+            "create-openidm-user-object": 0
         },
         {
             "read-user-object": 0
@@ -20,7 +20,7 @@
             "update-user-object": 0
         },
         {
-            "delete-user-object": 0
+            "delete-user-object": 200000
         },
         {
             "patch-user-object": 0
